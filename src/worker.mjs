@@ -117,4 +117,7 @@ async function doproxy(req) {
     }
 
     return response;
+  } catch (e) {
+    return new Response("Invalid target URL", { status: 400 });
+  }
 }
