@@ -107,7 +107,7 @@ async function doproxy(req) {
       method: req.method,
       headers,
       body: req.body,
-      duplex: 'half-duplex' 
+      duplex: 'half' 
     });
 
     
