@@ -92,7 +92,9 @@ async function doproxy(req) {
     const baseUrl = buildBaseUrl(url, protocol, targetPath);
     const headers = new Headers();
 
-    console.log(targetUrl);
+    console.log(targetUrl.toString());
+    console.log(req.method);
+    console.log(baseUrl);
     
     // 复制请求头（排除敏感头）
     req.headers.forEach((v, k) => {
@@ -106,6 +108,8 @@ async function doproxy(req) {
       headers,
       body: req.body
     });
+
+    console.log(response);
 
     // 只处理HTML和CSS内容
     const contentType = response.headers.get("content-type") || "";
