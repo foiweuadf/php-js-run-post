@@ -106,7 +106,8 @@ async function doproxy(req) {
     const response = await fetch(targetUrl.toString(), {
       method: req.method,
       headers,
-      body: req.body
+      body: req.body,
+      duplex: 'half-duplex' 
     });
 
     
