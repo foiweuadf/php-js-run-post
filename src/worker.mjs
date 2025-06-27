@@ -83,7 +83,7 @@ async function doproxy(req) {
   const [protocol, ...rest] = parts;
   const targetPath = rest.join("/");
   
-  if (!ALLOWED_PROTOCOLS.has(protocol)) {
+  if (!ALLOWED_PROTOCOLS.includes(protocol)) {
     return new Response("Unsupported protocol", { status: 400 });
   }
 
