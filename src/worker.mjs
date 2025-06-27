@@ -80,7 +80,7 @@ async function doproxy(req) {
     return new Response("Invalid path format", { status: 400 });
   }
 
-  const [protocol, ...rest] = parts;
+  const [t, protocol, ...rest] = parts;
   const targetPath = rest.join("/");
   
   if (!ALLOWED_PROTOCOLS.includes(protocol)) {
