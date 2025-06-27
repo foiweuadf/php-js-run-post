@@ -91,6 +91,8 @@ async function doproxy(req) {
     const targetUrl = new URL(`${protocol}://${targetPath}${url.search}`);
     const baseUrl = buildBaseUrl(url, protocol, targetPath);
     const headers = new Headers();
+
+    console.log(targetUrl);
     
     // 复制请求头（排除敏感头）
     req.headers.forEach((v, k) => {
