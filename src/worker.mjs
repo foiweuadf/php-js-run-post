@@ -109,13 +109,14 @@ async function doproxy(req) {
       body: req.body
     });
 
-    console.log(response);
+    
 
     // 只处理HTML和CSS内容
     const contentType = response.headers.get("content-type") || "";
     if (contentType.includes("text/html") || contentType.includes("text/css")) {
       const text = await response.text();
       const rewritten = await rewriteUrls(text, baseUrl);
+      console.log(rewritten);
       return new Response(rewritten, {
         status: response.status,
         headers: response.headers
