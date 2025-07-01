@@ -43,8 +43,8 @@ const handleOPTIONS = async () => {
 };
 
 
-function buildBaseUrl(reqUrl, protocol, targetPath) {
-  const proxyBase = `${reqUrl.origin}/${protocol}`;
+function buildBaseUrl(reqUrl, t, protocol, targetPath) {
+  const proxyBase = `${reqUrl.origin}/${t}/${protocol}`;
   
   // 处理以斜杠开头的路径
   const normalizedPath = targetPath.startsWith('/') 
@@ -89,7 +89,7 @@ async function doproxy(req) {
 
   try {
     const targetUrl = new URL(`${protocol}://${targetPath}${url.search}`);
-    const baseUrl = buildBaseUrl(url, protocol, targetPath);
+    const baseUrl = buildBaseUrl(url, t, protocol, targetPath);
     const headers = new Headers();
 
     console.log(targetUrl.toString());
