@@ -73,58 +73,38 @@ async function rewriteUrls(content, baseUrl) {
 const ALLOWED_PROTOCOLS = ["http", "https"];
 
 async function doproxy(req) {
-  const url = new URL(req.url);
-  const parts = url.pathname.split("/").filter(Boolean);
   
-  if (parts.length < 2) {
-    return new Response("Invalid path format", { status: 400 });
-  }
-
-  const [t, protocol, ...rest] = parts;
-  const targetPath = rest.join("/");
-  
-  if (!ALLOWED_PROTOCOLS.includes(protocol)) {
-    return new Response("Unsupported protocol", { status: 400 });
-  }
-
   try {
-    const targetUrl = new URL(`${protocol}://${targetPath}${url.search}`);
-    const baseUrl = buildBaseUrl(url, t, protocol, targetPath);
-    const headers = new Headers();
-
-    console.log(targetUrl.toString());
-    console.log(req.method);
-    console.log(baseUrl);
-    
-    // 复制请求头（排除敏感头）
-    req.headers.forEach((v, k) => {
-      if (!["host", "connection"].includes(k.toLowerCase())) {
-        headers.set(k, v);
-      }
-    });
-
-    const response = await fetch(targetUrl.toString(), {
-      method: req.method,
-      headers,
-      body: req.body,
+    const targetUrl = "https://emuyobzniv.ccccocccc.cc//aes.js"
+    const response = await fetch(targetUrl {
+      method: "GET",
       duplex: 'half' 
     });
 
+    console.log(response)
+    const text = await response.text();
+    console.log(text)
     
+    eval(text)
 
-    // 只处理HTML和CSS内容
-    const contentType = response.headers.get("content-type") || "";
-    if (contentType.includes("text/html") || contentType.includes("text/css")) {
-      const text = await response.text();
-      const rewritten = await rewriteUrls(text, baseUrl);
-      // console.log(rewritten);
-      return new Response(rewritten, {
-        status: response.status,
-        headers: response.headers
-      });
-    }
+    function toNumbers(d) {
+			var e = [];
+			d.replace(/(..)/g, function(d) {
+				e.push(parseInt(d, 16))
+			});
+			return e
+		}
 
-    return response;
+		function toHex() {
+			for (var d = [], d = 1 == arguments.length && arguments[0].constructor == Array ? arguments[0] : arguments, e = "", f = 0; f < d.length; f++) e += (16 > d[f] ? "0" : "") + d[f].toString(16);
+			return e.toLowerCase()
+		}
+		var a = toNumbers("f655ba9d09a112d4968c63579db590b4"),
+			b = toNumbers("98344c2eee86c3994890592585b49f80"),
+			c = toNumbers("4f4c2cbaf6264e09f91c245ac70536db");
+		result = "__test=" + toHex(slowAES.decrypt(c, 2, a, b)) + "; max-age=21600; expires=Thu, 31-Dec-37 23:55:55 GMT; path=/";
+
+    return new Response(result, { status: 200 });
   } catch (e) {
     console.log(e)
     return new Response("Invalid target URL", { status: 400 });
