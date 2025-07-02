@@ -76,7 +76,7 @@ async function doproxy(req) {
   
   try {
     const targetUrl = "https://emuyobzniv.ccccocccc.cc//aes.js"
-    const response = await fetch(targetUrl {
+    const response = await fetch(targetUrl, {
       method: "GET",
       duplex: 'half' 
     });
