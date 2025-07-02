@@ -267,6 +267,7 @@ var slowAES = {
 			f = [],
 			l = !0;
 		if (null !== t) {
+      let i = 0;
 			for (var c = 0; c < Math.ceil(t.length / 16); c++) {
 				var d = 16 * c,
 					p = 16 * c + 16;
