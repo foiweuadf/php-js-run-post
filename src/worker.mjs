@@ -93,7 +93,7 @@ async function doproxy(req) {
       }
     });
       
-    let text2 = resp2.text();
+    let text2 = await resp2.text();
 
     console.log(text2)
     
