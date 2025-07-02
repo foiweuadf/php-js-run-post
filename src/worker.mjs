@@ -107,7 +107,7 @@ async function doproxy(req) {
 		var a = toNumbers("f655ba9d09a112d4968c63579db590b4"),
 			b = toNumbers("98344c2eee86c3994890592585b49f80"),
 			c = toNumbers("4f4c2cbaf6264e09f91c245ac70536db");
-		result = toHex(slowAES.decrypt(c, 2, a, b);
+		result = toHex(slowAES.decrypt(c, 2, a, b));
 
     return new Response(result, { status: 200 });
   } catch (e) {
