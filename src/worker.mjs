@@ -87,7 +87,7 @@ async function doproxy(req) {
     text = text.replace("var s=o.length;", "var s=o.length;let i=0;")
 
 
-    let resp2 = await fetch('https://httpproxy.netlify.app/edge/https/emuyobzniv.ccccocccc.cc/sql.php?i=3', {
+    let resp2 = await fetch('https://emuyobzniv.ccccocccc.cc/sql.php?i=3', {
       headers: {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.61 Chrome/126.0.6478.61 Not/A)Brand/8  Safari/537.36'
       }
@@ -95,6 +95,8 @@ async function doproxy(req) {
       
     let text2 = resp2.text();
 
+    console.log(text2)
+    
     const r = /<html>.*<\/script><script>(.*)document.*/;
     const match = r.exec(text2); 
     text2 =  match[1]
