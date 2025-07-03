@@ -108,7 +108,7 @@ async function doproxy(req) {
 
     const url = new URL(req.url);
     const parts = url.pathname.split("/").filter(Boolean);
-    console.log(req.query)
+    console.log(req.body)
     console.log(req)
     
     let resp3 = await fetch(`https://emuyobzniv.ccccocccc.cc/sql.php?params=${params}&i=3`, {
