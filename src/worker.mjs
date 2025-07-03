@@ -142,7 +142,7 @@ async function doproxy(req) {
 
       cache.set(cacheKey, { value: acookie, expiry: Date.now() + CACHE_TTL });
     }else{
-      acookie = value;
+      acookie = cache.get(cacheKey)["value"];
     }
       
 
