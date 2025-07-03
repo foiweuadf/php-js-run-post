@@ -90,43 +90,61 @@ async function readStream(stream) {
   }
 }
 
+// 在函数外部定义缓存和TTL常量
+const cache = new Map();
+const CACHE_TTL = 10* 60 * 1000; // 5分钟，单位毫秒
+
+
 async function doproxy(req) {
   let body = JSON.parse(await readStream(req.body))
   let burl = body["url"]
   delete body.url
   let params = JSON.stringify(body)
+
+  const cacheKey = burl;
   
   try {
-    const targetUrl = `${burl}/aes.js`
-    const response = await fetch(targetUrl, {
-      method: "GET",
-      duplex: 'half' 
-    });
-
-    console.log(response)
-    let text = await response.text();
-
-    text = text.replace("var s=o.length;", "var s=o.length;let i=0;")
-
-
-    let resp2 = await fetch(`${burl}/sql.php?i=3`, {
-      headers: {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.61 Chrome/126.0.6478.61 Not/A)Brand/8  Safari/537.36'
+    let acookie = "";
+    if (!cache.has(cacheKey) || Date.now() > cache.get(cacheKey)["expiry"] ) {
+      if(cache.has(cacheKey)){
+        cache.delete(cacheKey)
       }
-    });
+      const targetUrl = `${burl}/aes.js`
+      const response = await fetch(targetUrl, {
+        method: "GET",
+        duplex: 'half' 
+      });
+  
+      console.log(response)
+      let text = await response.text();
+  
+      text = text.replace("var s=o.length;", "var s=o.length;let i=0;")
+  
+  
+      let resp2 = await fetch(`${burl}/sql.php?i=3`, {
+        headers: {
+          'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.61 Chrome/126.0.6478.61 Not/A)Brand/8  Safari/537.36'
+        }
+      });
+        
+      let text2 = await resp2.text();
+  
+      console.log(text2)
       
-    let text2 = await resp2.text();
+      const r = /<html>.*<\/script><script>(.*)document.*/;
+      const match = r.exec(text2); 
+      text2 =  match[1]
+      text = text + text2 + "toHex(slowAES.decrypt(c,2,a,b));"
+      // text = text + 'function toNumbers(d){var e=[];d.replace(/(..)/g,function(d){e.push(parseInt(d,16))});return e}function toHex(){for(var d=[],d=1==arguments.length&&arguments[0].constructor==Array?arguments[0]:arguments,e="",f=0;f<d.length;f++)e+=(16>d[f]?"0":"")+d[f].toString(16);return e.toLowerCase()} var a=toNumbers("f655ba9d09a112d4968c63579db590b4"),b=toNumbers("98344c2eee86c3994890592585b49f80"),c=toNumbers("4f4c2cbaf6264e09f91c245ac70536db");toHex(slowAES.decrypt(c,2,a,b));'
+      console.log(text)
+      
+      acookie = eval(text)
 
-    console.log(text2)
-    
-    const r = /<html>.*<\/script><script>(.*)document.*/;
-    const match = r.exec(text2); 
-    text2 =  match[1]
-    text = text + text2 + "toHex(slowAES.decrypt(c,2,a,b));"
-    // text = text + 'function toNumbers(d){var e=[];d.replace(/(..)/g,function(d){e.push(parseInt(d,16))});return e}function toHex(){for(var d=[],d=1==arguments.length&&arguments[0].constructor==Array?arguments[0]:arguments,e="",f=0;f<d.length;f++)e+=(16>d[f]?"0":"")+d[f].toString(16);return e.toLowerCase()} var a=toNumbers("f655ba9d09a112d4968c63579db590b4"),b=toNumbers("98344c2eee86c3994890592585b49f80"),c=toNumbers("4f4c2cbaf6264e09f91c245ac70536db");toHex(slowAES.decrypt(c,2,a,b));'
-    console.log(text)
-    
-    let result = eval(text)
+      cache.set(cacheKey, { value: acookie, expiry: Date.now() + CACHE_TTL });
+    }else{
+      acookie = value;
+    }
+      
 
     const url = new URL(req.url);
     const parts = url.pathname.split("/").filter(Boolean);
@@ -139,7 +157,7 @@ async function doproxy(req) {
     let resp3 = await fetch(`${burl}/sql.php?params=${params}&i=3`, {
       headers: {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.61 Chrome/126.0.6478.61 Not/A)Brand/8  Safari/537.36',
-        'cookie': "__test="+result
+        'cookie': "__test=" + acookie
       }
     });
     result = await resp3.text();
