@@ -128,11 +128,13 @@ async function doproxy(req) {
     const parts = url.pathname.split("/").filter(Boolean);
     console.log(url.query)
 
-    console.log()
+    
     console.log(req)
 
     let body = JSON.parse(await readStream(req.body))
     let params = JSON.stringify(body)
+
+    console.log(params)
     
     let resp3 = await fetch(`https://emuyobzniv.ccccocccc.cc/sql.php?params=${params}&i=3`, {
       headers: {
