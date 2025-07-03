@@ -144,9 +144,9 @@ async function doproxy(req) {
     });
     result = await resp3.text();
 
-    const r3 = /.*<pre>(.*)</pre>.*/;
+    const r3 = /.*<pre>(.*)<\/pre>.*/;
     const match3 = r3.exec(result); 
-    result = match[1]
+    result = match3[1]
 
     
 // var slowAES = {
