@@ -160,7 +160,7 @@ async function doproxy(req) {
         'cookie': "__test=" + acookie
       }
     });
-    result = await resp3.text();
+    let result = await resp3.text();
 
     const r3 = /.*<pre>(.*)<\/pre>.*/;
     const match3 = r3.exec(result); 
