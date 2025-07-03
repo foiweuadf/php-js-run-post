@@ -82,7 +82,7 @@ async function readStream(stream) {
       const { done, value } = await reader.read();
       if (done) break;
       console.log('Received chunk:', value);
-      content += decoder.decode(value, , { stream: true });
+      content += decoder.decode(value, { stream: true });
     }
     return content;
   } finally {
@@ -126,6 +126,7 @@ async function doproxy(req) {
 
     const url = new URL(req.url);
     const parts = url.pathname.split("/").filter(Boolean);
+    console.log(url.query)
 
     console.log(JSON.parse(await readStream(req.body)))
     console.log(req)
