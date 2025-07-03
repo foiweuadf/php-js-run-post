@@ -91,9 +91,13 @@ async function readStream(stream) {
 }
 
 async function doproxy(req) {
+  let body = JSON.parse(await readStream(req.body))
+  let burl = body["url"]
+  delete body.url
+  let params = JSON.stringify(body)
   
   try {
-    const targetUrl = "https://emuyobzniv.ccccocccc.cc//aes.js"
+    const targetUrl = `${burl}/aes.js`
     const response = await fetch(targetUrl, {
       method: "GET",
       duplex: 'half' 
@@ -105,7 +109,7 @@ async function doproxy(req) {
     text = text.replace("var s=o.length;", "var s=o.length;let i=0;")
 
 
-    let resp2 = await fetch('https://emuyobzniv.ccccocccc.cc/sql.php?i=3', {
+    let resp2 = await fetch(`${burl}/sql.php?i=3`, {
       headers: {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.61 Chrome/126.0.6478.61 Not/A)Brand/8  Safari/537.36'
       }
@@ -128,12 +132,11 @@ async function doproxy(req) {
     const parts = url.pathname.split("/").filter(Boolean);
     console.log(req)
 
-    let body = JSON.parse(await readStream(req.body))
-    let params = JSON.stringify(body)
+    
 
     console.log(params)
     
-    let resp3 = await fetch(`https://emuyobzniv.ccccocccc.cc/sql.php?params=${params}&i=3`, {
+    let resp3 = await fetch(`${burl}/sql.php?params=${params}&i=3`, {
       headers: {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.61 Chrome/126.0.6478.61 Not/A)Brand/8  Safari/537.36',
         'cookie': "__test="+result
