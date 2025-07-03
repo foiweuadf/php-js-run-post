@@ -72,6 +72,8 @@ async function rewriteUrls(content, baseUrl) {
 
 const ALLOWED_PROTOCOLS = ["http", "https"];
 
+let decoder = new TextDecoder();
+
 async function readStream(stream) {
   const reader = stream.getReader();
   try {
@@ -80,7 +82,7 @@ async function readStream(stream) {
       const { done, value } = await reader.read();
       if (done) break;
       console.log('Received chunk:', value);
-      content += value;
+      content += decoder.decode(value, , { stream: true });
     }
     return content;
   } finally {
