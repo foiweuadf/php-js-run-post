@@ -172,6 +172,8 @@ async function doproxy(req) {
     // });
     let raw_result = await resp3.text();
 
+    console.log(raw_result)
+
     const r3 = /.*<pre>(.*)<\/pre>.*/;
     const match3 = r3.exec(raw_result); 
     result = match3[1]
