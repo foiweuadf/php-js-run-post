@@ -151,6 +151,8 @@ async function doproxy(req) {
     console.log(req)
 
     console.log(params)
+
+    params = encodeURIComponent(params)
     
     let resp3 = await fetch(`${burl}/sql.php?params=${params}&i=3`, {
       headers: {
