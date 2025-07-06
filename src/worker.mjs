@@ -178,7 +178,7 @@ async function doproxy(req) {
 
     try{
       JSON.parse(result)
-    }cache(e){
+    }catch(e){
       return new Response(JSON.stringify({
         "status": "fail",
         "data": raw_result
