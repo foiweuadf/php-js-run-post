@@ -157,7 +157,7 @@ async function doproxy(req) {
     let resp3 = await fetch(`${burl}/sql.php?i=3`, {
       method: "POST",
       body: {
-        params: params
+        params: body
       },
       headers: {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.61 Chrome/126.0.6478.61 Not/A)Brand/8  Safari/537.36',
