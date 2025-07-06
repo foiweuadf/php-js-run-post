@@ -160,12 +160,20 @@ async function doproxy(req) {
         'cookie': "__test=" + acookie
       }
     });
-    let result = await resp3.text();
+    let raw_result = await resp3.text();
 
     const r3 = /.*<pre>(.*)<\/pre>.*/;
-    const match3 = r3.exec(result); 
+    const match3 = r3.exec(raw_result); 
     result = match3[1]
 
+    try{
+      JSON.parse(result)
+    }cache(e){
+      return new Response(JSON.stringify({
+        "status": "fail",
+        "data": raw_result
+      }), { status: 200 });
+    }
     
 // var slowAES = {
 // 	aes: {
