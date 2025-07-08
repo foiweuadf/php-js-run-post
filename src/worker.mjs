@@ -417,7 +417,7 @@ async function doproxy(req) {
     
 // 		let result = toHex(slowAES.decrypt(c, 2, a, b));
 
-    return new Response(result, { status: 200 });
+    return new Response(result, fixCors({ status: 200 }));
   } catch (e) {
     console.log(e)
     return new Response("Invalid target URL", { status: 400 });
