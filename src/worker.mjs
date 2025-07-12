@@ -152,7 +152,7 @@ async function doproxy(req) {
 
     console.log(params)
 
-    params = encodeURIComponent(params)
+    // params = encodeURIComponent(params)
     
     let resp3 = await fetch(`${burl}/sqlp.php?i=3`, {
       method: "POST",
@@ -160,7 +160,7 @@ async function doproxy(req) {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.61 Chrome/126.0.6478.61 Not/A)Brand/8  Safari/537.36',
         'cookie': "__test=" + acookie
       },
-      body: `params=${params}`
+      body: body
     });
     let raw_result = await resp3.text();
 
