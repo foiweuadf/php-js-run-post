@@ -167,9 +167,7 @@ async function doproxy(req) {
 
     console.log(raw_result)
 
-    const r3 = /.*<pre>(.*)<\/pre>.*/;
-    const match3 = r3.exec(raw_result); 
-    let result = match3[1]
+    result = raw_result;
 
     try{
       JSON.parse(result)
