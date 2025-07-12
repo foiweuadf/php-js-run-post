@@ -167,7 +167,7 @@ async function doproxy(req) {
 
     console.log(raw_result)
 
-    result = raw_result;
+    let result = raw_result;
 
     try{
       JSON.parse(result)
